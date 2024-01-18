@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.user.UserBean;
+import in.co.rays.util.JDBCDataSource;
 
 public class MarksheetModel {
 
 	public void add(MarksheetBean bean) throws Exception {
 
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = JDBCDataSource.getConnection();
 
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/marksheet", "root", "root");
 		PreparedStatement pstmt = conn.prepareStatement("insert into marksheet values(?,?,?,?,?)");
 
 		pstmt.setInt(1, bean.getId());
@@ -29,8 +29,7 @@ public class MarksheetModel {
 	}
 
 	public void update(MarksheetBean bean) throws Exception {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/marksheet", "root", "root");
+		Connection conn = JDBCDataSource.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement("update marksheet set enrollment_no = ? where id = ?");
 		pstmt.setInt(1, bean.getEnrollmentNo());
 		pstmt.setInt(2, bean.getId());
@@ -41,8 +40,7 @@ public class MarksheetModel {
 	}
 
 	public void delete(int id) throws Exception {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/marksheet", "root", "root");
+		Connection conn = JDBCDataSource.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement("delete from marksheet where id = ?");
 		pstmt.setInt(1, id);
 		;
@@ -53,8 +51,7 @@ public class MarksheetModel {
 	}
 
 	public void readAll() throws Exception {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/marksheet", "root", "root");
+		Connection conn = JDBCDataSource.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement("select * from marksheet");
 
 		ResultSet rs = pstmt.executeQuery();
@@ -70,8 +67,7 @@ public class MarksheetModel {
 	}
 
 	public MarksheetBean findByPk(int id) throws Exception {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/marksheet", "root", "root");
+		Connection conn = JDBCDataSource.getConnection();
 		PreparedStatement pstmt = conn.prepareStatement("select * from marksheet where id = ?");
 		pstmt.setInt(1, id);
 		ResultSet rs = pstmt.executeQuery();
@@ -90,13 +86,12 @@ public class MarksheetModel {
 	}
 
 	public List search(MarksheetBean bean, int PageNo, int PageSize) throws Exception {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/marksheet", "root", "root");
+		Connection conn = JDBCDataSource.getConnection();
 		StringBuffer sql = new StringBuffer("select * from marksheet where 1=1 ");
 		System.out.println("sql======>>>>>>" + sql);
 		if (bean != null) {
 
-			 //if (bean.getName() != null && bean.getName().length() > 0) {
+			// if (bean.getName() != null && bean.getName().length() > 0) {
 			if (bean.getName() != null) {
 
 				sql.append(" and name like '" + bean.getName() + "%'");

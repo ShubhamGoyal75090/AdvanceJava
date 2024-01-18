@@ -12,8 +12,8 @@ public class TestUser {
 		// testAdd();
 		// testUpdate();
 		// testDelete();
-		// testSearch();
-		testAuth();
+		 testSearch();
+		//testAuth();
 
 	}
 
